@@ -1,0 +1,101 @@
+﻿@model WeddingApplication.Models.ShopItems
+@{
+    <title>@ViewData["Title"] - WeddingApplication</title>
+    <link rel="stylesheet" href="~/css/shop-list.css" asp-append-version="true" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+}
+<body>
+    <div class=" body-content">
+        <div class="filter-box">
+             <div class="filter-title-holder">
+                 <h3>You can filter the gifts by editing the sliders below</h3>
+             </div>
+            <div class="filters">
+                <div class="PR-holder">
+                    <p>Price Range: </p>
+                    <div id="selected-value"></div>
+                    <button class="toggle-btn" data-btn-id="10">$1-10</button>
+                    <button class="toggle-btn" data-btn-id="25">$$10-25</button>
+                    <button class="toggle-btn" data-btn-id="100">$25-100</button>
+                    <button class="toggle-btn" data-btn-id="+">$100+</button>
+                </div>
+                <div class="fund-holder">
+                    <p>Fund/Item: </p>
+                    <div id="selected-value2"></div>
+                    <button class="toggle-btn2" data-btn-id="Fund">Fund</button>
+                    <button class="toggle-btn2" data-btn-id="Item">Item</button>
+                </div>
+                <div class="Categories">
+                    <p>Categories: </p>
+                    <div id="selected-value3"></div>
+                    <button class="toggle-btn3" data-btn-id="Kitchen">Kitchen</button>
+                    <button class="toggle-btn3" data-btn-id="Home">Home</button>
+                    <button class="toggle-btn3" data-btn-id="Gaming">Gaming</button>
+                    <button class="toggle-btn3" data-btn-id="Money">Money</button>
+                </div>
+            </div>
+
+             <div class="bottom-filter-holder">
+             </div>
+        </div>
+        <div class= "item-box">
+
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        $(".toggle-btn").click(function () {
+            // Remove 'active' class from all buttons
+            $(".toggle-btn").removeClass("active");
+
+            // Add 'active' class to the clicked button
+            $(this).addClass("active");
+
+            var selectedValue = $(this).data("btn-id");
+
+            // Display the selected value (optional)
+            $("#selected-value").text("Selected Value: " + selectedValue);
+        });
+        $(".toggle-btn2").click(function () {
+            // Remove 'active' class from all buttons
+            $(".toggle-btn2").removeClass("active");
+
+            // Add 'active' class to the clicked button
+            $(this).addClass("active");
+
+            var selectedValue = $(this).data("btn-id");
+
+            // Display the selected value (optional)
+            $("#selected-value2").text("Selected Value: " + selectedValue);
+        });
+        $(".toggle-btn3").click(function () {
+            // Remove 'active' class from all buttons
+            $(".toggle-btn3").removeClass("active");
+
+            // Add 'active' class to the clicked button
+            $(this).addClass("active");
+
+            var selectedValue = $(this).data("btn-id");
+
+            // Display the selected value (optional)
+            $("#selected-value3").text("Selected Value: " + selectedValue);
+        });
+    });
+</script>
+<style>
+    .toggle-btn.active {
+        background-color: #3498db; /* Change this to the desired style for the active state */
+        color: #fff; /* Change this to the desired text color for the active state */
+    }
+
+    .toggle-btn2.active {
+        background-color: #3498db; /* Change this to the desired style for the active state */
+        color: #fff; /* Change this to the desired text color for the active state */
+    }
+
+    .toggle-btn3.active {
+        background-color: #3498db; /* Change this to the desired style for the active state */
+        color: #fff; /* Change this to the desired text color for the active state */
+    }
+</style>

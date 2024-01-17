@@ -1,0 +1,31 @@
+﻿.body-content{
+    display: flex;
+    background-color: grey;
+    flex: 1;
+    flex-direction: row;
+}
+.filter-box{
+    display: flex;
+    flex-direction: column;
+    background-color: lightpink;
+    align-items: center;
+    justify-content : center;
+    flex: 2;
+}
+.filter-title-holder {
+    display: flex;
+    flex: 2.5;
+}
+.bottom-filter-holder{
+    display: flex;
+    flex: 2.5;
+}
+.filters {
+    display: block;
+    background-color: white;
+    flex: 5;
+    width: 100%;
+}
+.item-box{
+    flex: 8;
+}
