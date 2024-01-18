@@ -1,4 +1,7 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
-// Write your JavaScript code.
+﻿function handleFilters(ids) {
+    for (var i = 0; i < ids.length; i++) {
+        console.log(ids[i])
+        var element = document.getElementById(ids[i]);
+        element.style.display = "flex";
+    }
+}

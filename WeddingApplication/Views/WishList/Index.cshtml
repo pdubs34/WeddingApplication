@@ -1,4 +1,4 @@
-﻿@model WeddingApplication.Models.ShopItems
+﻿@model WeddingApplication.ViewModels.ShopItemsViewModel
 @{
     <title>@ViewData["Title"] - WeddingApplication</title>
     <link rel="stylesheet" href="~/css/shop-list.css" asp-append-version="true" />
@@ -6,96 +6,99 @@
 }
 <body>
     <div class=" body-content">
-        <div class="filter-box">
-             <div class="filter-title-holder">
-                 <h3>You can filter the gifts by editing the sliders below</h3>
-             </div>
-            <div class="filters">
-                <div class="PR-holder">
-                    <p>Price Range: </p>
-                    <div id="selected-value"></div>
-                    <button class="toggle-btn" data-btn-id="10">$1-10</button>
-                    <button class="toggle-btn" data-btn-id="25">$$10-25</button>
-                    <button class="toggle-btn" data-btn-id="100">$25-100</button>
-                    <button class="toggle-btn" data-btn-id="+">$100+</button>
-                </div>
-                <div class="fund-holder">
-                    <p>Fund/Item: </p>
-                    <div id="selected-value2"></div>
-                    <button class="toggle-btn2" data-btn-id="Fund">Fund</button>
-                    <button class="toggle-btn2" data-btn-id="Item">Item</button>
-                </div>
-                <div class="Categories">
-                    <p>Categories: </p>
-                    <div id="selected-value3"></div>
-                    <button class="toggle-btn3" data-btn-id="Kitchen">Kitchen</button>
-                    <button class="toggle-btn3" data-btn-id="Home">Home</button>
-                    <button class="toggle-btn3" data-btn-id="Gaming">Gaming</button>
-                    <button class="toggle-btn3" data-btn-id="Money">Money</button>
+        <div class= "item-box">
+            <div class="item-title-holder">
+                <h1>Registry</h1>
+                <div class="input-group">
+                    @Html.DropDownListFor(model => model.Category,
+                             new List<SelectListItem> {
+                    new SelectListItem { Value = "All Categories" , Text = "All Categories" },
+                    new SelectListItem { Value = "Fund" , Text = "Fund" },
+                    new SelectListItem { Value = "House" , Text = "House" },
+                    new SelectListItem { Value = "Kitchen" , Text = "Kitchen" },
+                    new SelectListItem { Value = "Misc" , Text = "Payton's Dumb Stuff" }
+                    },
+                             new { @class = "textbox", id = "txtCategory" })
+
+                    @Html.DropDownListFor(model => model.Price,
+                            new List<SelectListItem> {
+                    new SelectListItem { Value = "All Prices" , Text = "All Prices" },
+                    new SelectListItem { Value = "10" , Text = "$0 - 9.99" },
+                    new SelectListItem { Value = "25" , Text = "$10.00 - $24.99" },
+                    new SelectListItem { Value = "100" , Text = "$25.00 - $99.99" },
+                    new SelectListItem { Value = "250" , Text = "$100 - $249.99" },
+                    new SelectListItem { Value = "251" , Text = "$250+" }
+                    },
+                             new { @class = "textbox", id = "txtPrice" })
+ 
                 </div>
             </div>
+            <div class="item-holder">
+                    @if (Model != null)
+                    {
+                        foreach (WeddingApplication.ViewModels.ShopItemsViewModel shopItems in Model.Items)
+                        {
+                            <div class="item" id="@shopItems.ItemId">
+                                <div class="img-holder">
+                                <img src=@shopItems.ImgURL alt="Image" class="fit-image" />
+                                </div>
+                                    <div class="info-holder">
+                                        <p>Amount Needed: <em>@shopItems.Quantity</em></p>
+                                    <p>@shopItems.Name</p>
+                                    <p>@shopItems.Category</p>
+                                    <button>Buy Now!</button>
+                                    </div>
+                                    
 
-             <div class="bottom-filter-holder">
-             </div>
-        </div>
-        <div class= "item-box">
-
+                            </div>
+                        }
+                    }
+            </div>
         </div>
     </div>
 </body>
 <script>
     $(document).ready(function () {
         $(".toggle-btn").click(function () {
-            // Remove 'active' class from all buttons
             $(".toggle-btn").removeClass("active");
 
-            // Add 'active' class to the clicked button
             $(this).addClass("active");
 
             var selectedValue = $(this).data("btn-id");
 
-            // Display the selected value (optional)
             $("#selected-value").text("Selected Value: " + selectedValue);
         });
         $(".toggle-btn2").click(function () {
-            // Remove 'active' class from all buttons
             $(".toggle-btn2").removeClass("active");
 
-            // Add 'active' class to the clicked button
             $(this).addClass("active");
 
             var selectedValue = $(this).data("btn-id");
 
-            // Display the selected value (optional)
             $("#selected-value2").text("Selected Value: " + selectedValue);
         });
         $(".toggle-btn3").click(function () {
-            // Remove 'active' class from all buttons
             $(".toggle-btn3").removeClass("active");
 
-            // Add 'active' class to the clicked button
             $(this).addClass("active");
 
             var selectedValue = $(this).data("btn-id");
-
-            // Display the selected value (optional)
             $("#selected-value3").text("Selected Value: " + selectedValue);
         });
     });
 </script>
-<style>
-    .toggle-btn.active {
-        background-color: #3498db; /* Change this to the desired style for the active state */
-        color: #fff; /* Change this to the desired text color for the active state */
-    }
+<script type="text/javascript">
+    document.getElementById("txtCategory").onchange = function () {
 
-    .toggle-btn2.active {
-        background-color: #3498db; /* Change this to the desired style for the active state */
-        color: #fff; /* Change this to the desired text color for the active state */
+        $('.item').css('display', 'none');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetItems", "WishList")',
+            data: { category: document.getElementById("txtCategory").value, price : document.getElementById("txtPrice").value },
+            success: function (ids) {
+                handleFilters(ids);
+            },
+            error: function () { alert('Failed to get items, displaying all!'); }
+        });
     }
-
-    .toggle-btn3.active {
-        background-color: #3498db; /* Change this to the desired style for the active state */
-        color: #fff; /* Change this to the desired text color for the active state */
-    }
-</style>
+</script>
