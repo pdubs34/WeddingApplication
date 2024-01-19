@@ -4,21 +4,20 @@ namespace WeddingApplication.Models
 {
     public class Range
     {
-        public int Min { get; set; }
-        public int Max { get; set; }
-        
-        public int Num { get; set; }
+        public decimal Min { get; set; } = 0;
+        public decimal Max { get; set; } = 0;
 
-        public Range() { }
-        public Range(int min, int max, int num) {
-            Min = min;
-            Max = max;
-            Num = num;
+        public Range() {
         }
 
-        internal bool IsNumInRange()
+        public Range(decimal min, decimal max)
         {
-            return Num >= Min && Num <= Max;
+            Min = min;
+            Max = max;
+        }
+        internal bool IsNumInRange(decimal num)
+        {
+            return num >= Min && num <= Max;
         }
     }
 }

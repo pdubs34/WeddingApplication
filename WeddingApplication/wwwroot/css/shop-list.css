@@ -3,7 +3,7 @@
     flex: 1;
     flex-direction: row;
     justify-content: center;
-    background-color: lightcyan;
+    background-color: #646867;
 }
 
 .item-box{
@@ -15,11 +15,13 @@
 }
 
 .item-title-holder {
-    padding-left:16px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
     padding-right: 16px;
     height: 100px;
     text-align: center;
-    justify-content: space-between;
+    color: white;
 }
 .item-holder {
     padding-left: 16px;
@@ -37,6 +39,7 @@
 }
 .input-group{
     display: flex;
+    flex:8;
     justify-content: flex-start;
 }
 .item {
@@ -47,10 +50,13 @@
     max-width: calc(25% - 16px);
     min-width: calc(25% - 16px);
     box-sizing: border-box;
-    background-color: lightblue;
+    background-color: #e2e8ec;
     height: 600px;
 }
-
+.title-holder{
+    display: flex;
+    flex:2;
+}
 .img-holder {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -60,13 +66,83 @@
     max-height: 100%; /* Ensure the image does not exceed the height of its container */
     overflow: hidden;
 }
-
+.textbox{
+    border-radius : 5px;
+}
 .info-holder{
+    flex-direction: column;
+    display: flex;
     flex:6;
+    text-align: center;
 }
 
-@media screen and (max-width: 1000px) {
+.description-holder{
+    flex:3;
+    align-items: 
+}
+.button-holder{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: flex-end;
+    flex:5;
+}
+.quantity-holder{
+    flex:2;
+}
+/* custom-select.css */
+/* Custom styles for custom select */
+.custom-select {
+    position: relative;
+    width: 200px;
+}
 
+.selected-option {
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    color: #000000;
+    background-color: #ffffff;
+    z-index: 1; /* Ensure the selected option is above the options dropdown */
+}
+
+.options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    color: #000000;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 2; /* Ensure the options dropdown is below the selected option */
+}
+
+.option {
+    padding: 10px;
+    cursor: pointer;
+}
+
+    .option:hover {
+        background-color: #f8f9fa;
+    }
+
+.buy-button {
+    width: 80%;
+    height: 20%;
+    border-radius: 5px;
+    border-width: 1px;
+    transition: background-color 0.3s ease;
+}
+    .buy-button:hover {
+        background-color: #cbcbcb;
+    }
+
+@media screen and (max-width: 1000px) {
     .item-box {
         width: 80%;
     }

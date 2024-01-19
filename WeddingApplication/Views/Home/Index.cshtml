@@ -2,7 +2,68 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    /* Custom styles for custom select */
+    .custom-select {
+        position: relative;
+        width: 200px;
+    }
+
+    .selected-option {
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        padding: 10px;
+        cursor: pointer;
+        background-color: #ffffff;
+    }
+
+    .options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        margin-top: 5px; /* Adjust margin as needed */
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .option {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+        .option:hover {
+            background-color: #f8f9fa;
+        }
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="custom-select" id="customSelect">
+        <div class="selected-option" onclick="toggleOptions()">Select an option</div>
+        <div class="options" id="options">
+            <div class="option" onclick="selectOption('Option 1')">Option 1</div>
+            <div class="option" onclick="selectOption('Option 2')">Option 2</div>
+            <div class="option" onclick="selectOption('Option 3')">Option 3</div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function toggleOptions() {
+        var options = document.getElementById('options');
+        options.style.display = options.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function selectOption(option) {
+        var selectedOption = document.getElementById('customSelect').getElementsByClassName('selected-option')[0];
+        selectedOption.textContent = option;
+        document.getElementById('options').style.display = 'none';
+    }
+</script>
+

@@ -8,29 +8,32 @@
     <div class=" body-content">
         <div class= "item-box">
             <div class="item-title-holder">
-                <h1>Registry</h1>
+                <div class="title-holder">
+                    <p style="margin: 0;">Registry</p>
+                </div>
                 <div class="input-group">
-                    @Html.DropDownListFor(model => model.Category,
-                             new List<SelectListItem> {
-                    new SelectListItem { Value = "All Categories" , Text = "All Categories" },
-                    new SelectListItem { Value = "Fund" , Text = "Fund" },
-                    new SelectListItem { Value = "House" , Text = "House" },
-                    new SelectListItem { Value = "Kitchen" , Text = "Kitchen" },
-                    new SelectListItem { Value = "Misc" , Text = "Payton's Dumb Stuff" }
-                    },
-                             new { @class = "textbox", id = "txtCategory" })
+                      <div class="custom-select" id="customSelect">
+                        <div class="selected-option" onclick="toggleOptions()">Select Category</div>
+                        <div class="options" id="options">
+                            <div class="option" onclick="selectOption('All Categories')"><em>All Categories</em></div>
+                            <div class="option" onclick="selectOption('Fund')">Fund</div>
+                            <div class="option" onclick="selectOption('House')">House</div>
+                            <div class="option" onclick="selectOption('Kitchen')">Kitchen</div>
+                            <div class="option" onclick="selectOption('Misc')">Payton's Dumb Stuff</div>
+                        </div>
+                    </div>
+                    <div class="custom-select" id="customSelectPrice">
+                        <div class="selected-option" onclick="toggleOptions2('customSelectPrice')">Select Price Range</div>
+                        <div class="options" id="optionsPrice">
+                            <div class="option" onclick="selectOption2('All Prices')">All Prices</div>
+                            <div class="option" onclick="selectOption2('$0 - 9.99')"> $0 - 9.99</div>
+                            <div class="option" onclick="selectOption2('$10.00 - $24.99')"> $10.00 - $24.99</div>
+                            <div class="option" onclick="selectOption2('$25.00 - $99.99')"> $25.00 - $99.99</div>
+                            <div class="option" onclick="selectOption2('$100 - $249.99')"> $100 - $249.99</div>
+                            <div class="option" onclick="selectOption2('$250+')"> $250+</div>
+                        </div>
+                    </div>
 
-                    @Html.DropDownListFor(model => model.Price,
-                            new List<SelectListItem> {
-                    new SelectListItem { Value = "All Prices" , Text = "All Prices" },
-                    new SelectListItem { Value = "10" , Text = "$0 - 9.99" },
-                    new SelectListItem { Value = "25" , Text = "$10.00 - $24.99" },
-                    new SelectListItem { Value = "100" , Text = "$25.00 - $99.99" },
-                    new SelectListItem { Value = "250" , Text = "$100 - $249.99" },
-                    new SelectListItem { Value = "251" , Text = "$250+" }
-                    },
-                             new { @class = "textbox", id = "txtPrice" })
- 
                 </div>
             </div>
             <div class="item-holder">
@@ -40,14 +43,22 @@
                         {
                             <div class="item" id="@shopItems.ItemId">
                                 <div class="img-holder">
-                                <img src=@shopItems.ImgURL alt="Image" class="fit-image" />
+                                    <img src=@shopItems.ImgURL alt="Image" class="fit-image" />
                                 </div>
-                                    <div class="info-holder">
-                                        <p>Amount Needed: <em>@shopItems.Quantity</em></p>
-                                    <p>@shopItems.Name</p>
-                                    <p>@shopItems.Category</p>
-                                    <button>Buy Now!</button>
-                                    </div>
+                                 <div class="info-holder">
+                                     <div class="description-holder">
+                                            <p>@shopItems.Name</p>
+                                            <p>$@shopItems.Price</p>
+                                        
+                                     </div>
+                                     <div class="button-holder">
+                                        <button class="buy-button">Buy Now!</button>
+                                     </div>
+                                     <div class="quantity-holder">
+                                         <p>Requested: @shopItems.Quantity </p>
+                                     </div>
+                                    
+                                 </div>
                                     
 
                             </div>
@@ -94,7 +105,20 @@
         $.ajax({
             type: "GET",
             url: '@Url.Action("GetItems", "WishList")',
-            data: { category: document.getElementById("txtCategory").value, price : document.getElementById("txtPrice").value },
+            data: { category: document.getElementById("txtCategory").value, price: document.getElementById("txtPrice").value },
+            success: function (ids) {
+                handleFilters(ids);
+            },
+            error: function () { alert('Failed to get items, displaying all!'); }
+        });
+    }
+    document.getElementById("txtPrice").onchange = function () {
+
+        $('.item').css('display', 'none');
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetItems", "WishList")',
+            data: { category: document.getElementById("txtCategory").value, price: document.getElementById("txtPrice").value },
             success: function (ids) {
                 handleFilters(ids);
             },

@@ -16,7 +16,7 @@ namespace WeddingApplication.Controllers
             return View(shopItemsViewModel);
         }
         [HttpGet]
-        public JsonResult GetItems(string category, string price)
+        public JsonResult GetItems(string category, int price)
         {
             ShopItemsViewModel shopItemsViewModel = new ShopItemsViewModel();
             shopItemsViewModel.PopulateItems();
@@ -25,11 +25,57 @@ namespace WeddingApplication.Controllers
             
             foreach (ShopItemsViewModel items in shopItemsViewModel.Items)
             {
-                bool validItem = false;
-                if (items.Category == category || category == "All Categories")
+                bool validItem = true;
+                if (items.Category != category && category != "All Categories")
                 {
-                    validItem = true;
+                    validItem = false;
                 }
+                if(price == 10)
+                {
+                    range.Min = 0;
+                    range.Max = 10;
+                    if (!range.IsNumInRange(items.Price))
+                    {
+                        validItem = false;
+                    }
+                }
+                if (price == 25)
+                {
+                    range.Min = 10;
+                    range.Max = 24.99m;
+                    if (!range.IsNumInRange(items.Price))
+                    {
+                        validItem = false;
+                    }
+                }
+                if (price == 100)
+                {
+                    range.Min = 25;
+                    range.Max = 99.99m;
+                    if (!range.IsNumInRange(items.Price))
+                    {
+                        validItem = false;
+                    }
+                }
+                if (price == 250)
+                {
+                    range.Min = 100;
+                    range.Max = 249.99m;
+                    if (!range.IsNumInRange(items.Price))
+                    {
+                        validItem = false;
+                    }
+                }
+                if (price == 251)
+                {
+                    range.Min = 250;
+                    range.Max = Decimal.MaxValue;
+                    if (!range.IsNumInRange(items.Price))
+                    {
+                        validItem = false;
+                    }
+                }
+
                 if (validItem)
                 {
                     ids.Add(items.ItemId);
