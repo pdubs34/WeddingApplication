@@ -26,7 +26,7 @@ namespace WeddingApplication.Controllers
             foreach (ShopItemsViewModel items in shopItemsViewModel.Items)
             {
                 bool validItem = true;
-                if (items.Category != category && category != "All Categories")
+                if (items.Category != category && category != "All")
                 {
                     validItem = false;
                 }

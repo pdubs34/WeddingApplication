@@ -1,28 +1,49 @@
-﻿function handleFilters(ids) {
-    for (var i = 0; i < ids.length; i++) {
-        console.log(ids[i])
-        var element = document.getElementById(ids[i]);
-        element.style.display = "flex";
+﻿var FilterManager = {
+    filters: {
+        category: 'All',
+        price: 'All',
+        availability: 'All'
+    },
+
+    setFilter: function (filterName, filter) {
+        if (filterName === 'price' || filterName === 'category' || filterName === 'availability') {
+            this.filters[filterName] = filter;
+            document.getElementById("dropdownMenuLink").textContent = filter;
+            this.selectOption();
+        } else {
+            console.error('Invalid filter name:', filterName);
+        }
+    },
+
+    selectOption: function () {
+        $('.item').css('display', 'none');
+        $.ajax({
+            type: 'GET',
+            url: apiUrl,
+            data: this.filters,
+            success: function (ids) {
+                FilterManager.handleFilters(ids);
+            },
+            error: function (xhr, status, error) {
+                console.error('Failed to get items:', error);
+                alert('Failed to get items, displaying all!');
+            }
+        });
+    },
+
+    handleFilters: function (ids) {
+        for (var i = 0; i < ids.length; i++) {
+            console.log(ids[i]);
+            var element = document.getElementById(ids[i]);
+            if (element) {
+                element.style.display = 'flex';
+            }
+        }
     }
-}
+};
+
 function toggleOptions() {
     var options = document.getElementById('options');
     options.style.display = options.style.display === 'block' ? 'none' : 'block';
 }
 
-function selectOption(option) {
-    var selectedOption = document.getElementById('customSelect').getElementsByClassName('selected-option')[0];
-    selectedOption.textContent = option;
-    document.getElementById('options').style.display = 'none';
-}
-
-function toggleOptions2(selectId) {
-    var options = document.getElementById('options' + selectId);
-    options.style.display = options.style.display === 'block' ? 'none' : 'block';
-}
-
-function selectOption2(option) {
-    var selectedOption = document.getElementById('customSelectPrice').getElementsByClassName('selected-option')[0];
-    selectedOption.textContent = option;
-    document.getElementById('optionsPrice').style.display = 'none';
-}

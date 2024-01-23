@@ -4,17 +4,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WeddingApplication</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
     <header>
        <div class="header">
            <div class="title-holder">
-                <h1>Hailey Haase and Wayton Pebb</h1>
+                <h1>Dumb & Dumber</h1>
            </div>
            <div class="links-holder">
-                <a asp-area="" asp-action="Index" asp-controller="Home">Home</a>
-                <a asp-area="" asp-action="Index" asp-controller="WishList">Wish List</a>
+                <a asp-area="" asp-action="Index" asp-controller="Home" class="nav">Home</a>
+                <a asp-area="" asp-action="Index" asp-controller="WishList" class="nav">Wish List</a>
+                <a asp-area="" asp-action="Index" asp-controller="HWM" class="nav">How We Met</a>
+                <a asp-area="" asp-action="Index" asp-controller="RSVP" class="nav">RSVP</a>
+                <a asp-area="" asp-action="Index" asp-controller="WP" class="nav">Wedding Party</a>
            </div>
+            <hr class="divider">
+
        </div>
     </header>
     <section class="section-content">
